@@ -67,3 +67,9 @@ def run_game_over(screen, clock):
         restart_text = button_font.render("Main Lagi", True, WHITE) 
         restart_text_rect = restart_text.get_rect(center=restart_button_rect.center) 
         screen.blit(restart_text, restart_text_rect) 
+        
+            # Gambar Tombol "Keluar" 
+        pygame.draw.rect(screen, RED, quit_button_rect, border_radius=10) 
+        quit_text = button_font.render("Keluar", True, WHITE) 
+        quit_text_rect = quit_text.get_rect(center=quit_button_rect.center) 
+        screen.blit(quit_text, quit_text_rect) 
