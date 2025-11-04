@@ -12,3 +12,13 @@ SCREEN_HEIGHT = 600
 # Inisialisasi font  
 title_font = pygame.font.SysFont(None, 100) 
 button_font = pygame.font.SysFont(None, 45) 
+
+# Buat Tombol "Main Lagi" 
+button_width = 180 
+button_height = 60 
+restart_button_rect = pygame.Rect( 
+    (SCREEN_WIDTH // 2) - button_width - 20,  
+    (SCREEN_HEIGHT // 2) + 50,  
+    button_width,  
+    button_height 
+) 
