@@ -61,3 +61,9 @@ def run_game_over(screen, clock):
         title_text = title_font.render("GAME OVER", True, RED) 
         title_rect = title_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50)) 
         screen.blit(title_text, title_rect)
+        
+               # Gambar Tombol "Main Lagi" 
+        pygame.draw.rect(screen, GREEN, restart_button_rect, border_radius=10) 
+        restart_text = button_font.render("Main Lagi", True, WHITE) 
+        restart_text_rect = restart_text.get_rect(center=restart_button_rect.center) 
+        screen.blit(restart_text, restart_text_rect) 
