@@ -73,3 +73,7 @@ def run_game_over(screen, clock):
         quit_text = button_font.render("Keluar", True, WHITE) 
         quit_text_rect = quit_text.get_rect(center=quit_button_rect.center) 
         screen.blit(quit_text, quit_text_rect) 
+        
+              # --- 3. Update Layar --- 
+        pygame.display.flip() 
+        clock.tick(60) 
