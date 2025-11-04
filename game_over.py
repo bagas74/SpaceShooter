@@ -30,3 +30,34 @@ quit_button_rect = pygame.Rect(
     button_width,  
     button_height 
 ) 
+
+def run_game_over(screen, clock): 
+    """ 
+    Menjalankan loop layar game over. 
+    Mengembalikan "playing" atau "quit". 
+    """ 
+     
+    game_over_running = True 
+    while game_over_running: 
+         
+        # --- 1. Event Handling --- 
+        for event in pygame.event.get(): 
+            if event.type == pygame.QUIT: 
+                return "quit"  
+             
+            if event.type == pygame.MOUSEBUTTONDOWN: 
+                # Cek tombol "Main Lagi" 
+                if restart_button_rect.collidepoint(event.pos): 
+                    # [PERUBAHAN] Ganti dari "main_menu" menjadi "playing" 
+                    return "playing"  
+                 
+                # Cek tombol "Keluar" 
+                if quit_button_rect.collidepoint(event.pos): 
+                    return "quit"  
+ 
+        # --- 2. Render --- 
+        screen.fill(BLACK) 
+         
+        title_text = title_font.render("GAME OVER", True, RED) 
+        title_rect = title_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50)) 
+        screen.blit(title_text, title_rect)
