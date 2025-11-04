@@ -22,3 +22,11 @@ restart_button_rect = pygame.Rect(
     button_width,  
     button_height 
 ) 
+
+# Buat Tombol "Keluar" 
+quit_button_rect = pygame.Rect( 
+    (SCREEN_WIDTH // 2) + 20,  
+    (SCREEN_HEIGHT // 2) + 50,  
+    button_width,  
+    button_height 
+) 
