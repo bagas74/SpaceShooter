@@ -20,3 +20,10 @@ start_button_rect = pygame.Rect(
  button_width, 
  button_height
 )
+
+def run_menu(screen, clock):
+ """
+ Menjalankan loop menu.
+ Menerima 'screen' dan 'clock' dari main.py.
+ Mengembalikan status berikutnya ("playing" or "quit").
+ """
