@@ -229,6 +229,10 @@ class Player(pygame.sprite.Sprite):
         self.lives = s.PLAYER_STARTING_LIVES
         self.is_invincible = False
         self.invincible_timer = 0
+        
+    # PENTING: Player tidak memiliki fungsi update()
+    # Ini bagus, karena update() hanya dipanggil saat banner_state == "hidden"
+    # dan kita mengontrol timer secara terpisah via update_timers()
 
     def update_timers(self):
         if self.trishot_active:
@@ -250,7 +254,7 @@ class Player(pygame.sprite.Sprite):
                     self.laser_sprite.kill() 
                     self.laser_sprite = None
             elif self.laser_sprite:
-                self.laser_sprite.update(self.rect)
+                self.laser_sprite.update(self.rect) # Update posisi laser
                 
         if self.speed_indicator_timer > 0: 
             self.speed_indicator_timer -= 1
@@ -431,4 +435,3 @@ class PlayerLaser(pygame.sprite.Sprite):
             self.rect = self.image.get_rect() 
             self.rect.midbottom = player_rect.midtop
             self.draw_laser()
-            

@@ -7,8 +7,12 @@ GREEN_TOSCA = (0, 204, 153)
 GREEN = (0, 150, 0)
 FPS = 60  # Dibutuhkan untuk timer
 PLAYER_STARTING_LIVES = 3
-PLAYER_INVINCIBILITY_DURATION = 3 * FPS
-STAGE_CLEAR_DURATION = 3
+PLAYER_INVINCIBILITY_DURATION = 7 * FPS
+STAGE_CLEAR_DURATION = 6
+# Pengaturan Banner Notifikasi Stage
+BANNER_HEIGHT = 100  # Tinggi banner dalam piksel
+BANNER_SPEED = 10    # Kecepatan banner bergerak (piksel per frame)
+BANNER_STAY_TIME = 2 * FPS # Waktu banner diam di layar (2 detik)
 
 # --- Warna-warna detail (Pesawat Dicerahkan) --- (BARIS 17)
 COLOR_JET_BODY = (180, 190, 200)
