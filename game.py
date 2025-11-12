@@ -9,21 +9,22 @@ import os
 from sprites import Player, Musuh, Peluru, PeluruMusuh, Powerup, Shockwave, PlayerLaser
 
 try:
-    player_mini_img = pygame.transform.scale(assets.PLAYER_IMAGE, (25, 27))
+    player_mini_img = pygame.transform.scale(assets.PLAYER_IMAGE, (50, 45))
 except: 
-    player_mini_img = pygame.Surface((25, 27))
+    player_mini_img = pygame.Surface((50, 45))
     player_mini_img.fill(s.POWERUP_BLUE)
 
 def draw_lives(surface, x, y, lives, img):
     for i in range(lives):
         img_rect = img.get_rect()
-        img_rect.x = x + 30 * i
+        img_rect.x = x + 50 * i
         img_rect.y = y
         surface.blit(img, img_rect)
 
 # --- run_game ---
 def run_game(screen, clock):
     
+    # --- Setup Variabel Game ---
     PLAYER_WIDTH = s.PLAYER_IMAGE_SIZE[0]
     PLAYER_HEIGHT = s.PLAYER_IMAGE_SIZE[1]
     player_speed = 10
@@ -81,6 +82,16 @@ def run_game(screen, clock):
     max_shooter_enemies = 0 
     current_enemy_speed = base_enemy_speed 
 
+    # --- Variabel untuk Indikator Volume ---
+    volume_indicator_timer = 0 
+    volume_indicator_text = ""   
+
+    # --- Logika musik untuk layar game ---
+    if s.MUSIC_ENABLED:
+        pygame.mixer.music.load(assets.MUSIC_GAME)
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(s.MUSIC_VOLUME) 
+    
     game_running = True
     while game_running:
 
@@ -89,20 +100,57 @@ def run_game(screen, clock):
             if event.type == pygame.QUIT:
                 return "quit", 0 
             
-            # [DIUBAH] Hanya boleh menembak jika banner 'hidden'
-            if event.type == pygame.KEYDOWN and banner_state == "hidden":
-                if event.key == pygame.K_SPACE:
-                    if player.can_shoot(frame_count):
-                        player.shoot(frame_count, grup_peluru_pemain, semua_sprite)
+            if event.type == pygame.KEYDOWN:
+                
+                # --- Logika Tombol Mute 'M'] ---
+                if event.key == pygame.K_m:
+                    s.MUSIC_ENABLED = not s.MUSIC_ENABLED
+                    if s.MUSIC_ENABLED:
+                        pygame.mixer.music.load(assets.MUSIC_GAME)
+                        pygame.mixer.music.play(-1)
+                        pygame.mixer.music.set_volume(s.MUSIC_VOLUME)
+                        volume_indicator_timer = 60 
+                        volume_indicator_text = f"Volume: {int(s.MUSIC_VOLUME * 100)}%"
+                    else:
+                        pygame.mixer.music.stop()
+                        volume_indicator_timer = 60 
+                        volume_indicator_text = "Music: Off"
+                
+                # --- Logika Volume Up/Down ---
+                elif event.key == pygame.K_EQUALS: # Tombol =/+
+                    s.MUSIC_VOLUME = min(1.0, round(s.MUSIC_VOLUME + 0.1, 1))
+                    pygame.mixer.music.set_volume(s.MUSIC_VOLUME)
+                    s.MUSIC_ENABLED = True 
+                    volume_indicator_timer = 60 
+                    volume_indicator_text = f"Volume: {int(s.MUSIC_VOLUME * 100)}%"
+                    
+                elif event.key == pygame.K_MINUS: # Tombol -/_
+                    s.MUSIC_VOLUME = max(0.0, round(s.MUSIC_VOLUME - 0.1, 1))
+                    pygame.mixer.music.set_volume(s.MUSIC_VOLUME)
+                    volume_indicator_timer = 60 
+                    volume_indicator_text = f"Volume: {int(s.MUSIC_VOLUME * 100)}%"
+                    
+                    if s.MUSIC_VOLUME <= 0.0:
+                        s.MUSIC_ENABLED = False
+                        volume_indicator_text = "Music: Off" 
+                        
+                # --- Logika Tembak ---
+                if banner_state == "hidden":
+                    if event.key == pygame.K_SPACE:
+                        if player.can_shoot(frame_count):
+                            player.shoot(frame_count, grup_peluru_pemain, semua_sprite)
 
         # --- UPDATE SKOR & FRAME ---
         frame_count += 1
         if frame_count % 12 == 0:
             score += 1
-            stage_xp += 1 # Tambah XP untuk waktu
+            stage_xp += 1 
         
+        # --- Update Timer Indikator ---
+        if volume_indicator_timer > 0:
+            volume_indicator_timer -= 1
+            
         # --- INPUT GERAK ---
-        # (Input gerak tetap berjalan agar pemain bisa menghindar saat banner turun)
         keys = pygame.key.get_pressed()
         if keys[pygame.K_LEFT] and player.rect.left > 0:
             player.rect.x -= player_speed
@@ -116,7 +164,6 @@ def run_game(screen, clock):
         # --- 2. Logika Game (Update) ---
         new_enemy_bullets = []
         
-        # [PERBAIKAN BUG] Hanya update sprite jika banner 'hidden'
         if banner_state == "hidden":
             for sprite in semua_sprite:
                 sprite.update() 
@@ -126,33 +173,27 @@ def run_game(screen, clock):
                         peluru_baru = sprite.shoot() 
                         new_enemy_bullets.extend(peluru_baru)
         else:
-             # Saat banner terlihat, kita HANYA update player
-             # agar dia tetap bisa bergerak (tapi tidak bisa menembak)
-             player.update() # Memanggil .update() kosong, aman
+             player.update()
         
         if new_enemy_bullets:
             semua_sprite.add(new_enemy_bullets)
             grup_peluru_musuh.add(new_enemy_bullets)
             
-        player.update_timers() # Timer powerup di-update setiap saat (Aman)
+        player.update_timers()
 
-        # [LOGIKA STAGE DIUBAH]
-        new_stage = 1 + (stage_xp // 300) # (Kesulitan 300 poin)
+        # --- Logika Stage ---
+        new_stage = 1 + (stage_xp // 500) 
         
         if new_stage > current_stage and banner_state == "hidden":
-            # --- MULAI ANIMASI BANNER ---
             banner_state = "moving_down"
             banner_text_surf = assets.stage_clear_font.render(f"STAGE {new_stage}", True, s.WHITE)
-            
             current_stage = new_stage
             print(f"Memicu Stage {current_stage}!") 
             
-            # [PERBAIKAN KESULITAN]
             current_enemy_speed = base_enemy_speed + (current_stage * 0.15) 
             max_ufo_enemies = min(2 + current_stage, 6) 
             max_shooter_enemies = current_stage // 3
             
-            # [PERBAIKAN MEMORI] Ganti .empty() dengan .kill()
             for musuh in grup_musuh:
                 musuh.kill()
             for peluru in grup_peluru_musuh:
@@ -162,7 +203,7 @@ def run_game(screen, clock):
             for powerup in grup_powerup:
                 powerup.kill()
         
-        # [BLOK BARU] Logika Animasi Banner (berjalan setiap frame)
+        # --- Logika Animasi Banner ---
         if banner_state == "moving_down":
             banner_y_pos += s.BANNER_SPEED
             if banner_y_pos >= 0: 
@@ -185,7 +226,7 @@ def run_game(screen, clock):
             if musuh.rect.top > s.SCREEN_HEIGHT: 
                 musuh.kill()
         
-        # [PERBAIKAN BUG] Hanya spawn jika banner 'hidden'
+        # --- Spawn Powerup ---
         if banner_state == "hidden":
             powerup_spawn_timer += 1
             if powerup_spawn_timer >= s.POWERUP_SPAWN_RATE: 
@@ -196,7 +237,6 @@ def run_game(screen, clock):
                 semua_sprite.add(new_powerup)
 
         # --- 3. Cek Tabrakan ---
-        # [PERBAIKAN BUG] Hanya cek tabrakan jika banner 'hidden'
         if banner_state == "hidden":
             tabrakan_peluru_musuh = pygame.sprite.groupcollide(grup_peluru_pemain, grup_musuh, True, True)
             for list_musuh_terkena in tabrakan_peluru_musuh.values():
@@ -252,7 +292,6 @@ def run_game(screen, clock):
                 special_meter_count = 0 
 
             # --- Logika Respawn Musuh ---
-            # Ini juga HARUS di dalam (if banner_state == "hidden")
             ufo_count = sum(1 for m in grup_musuh if not m.is_new_enemy)
             while ufo_count < max_ufo_enemies:
                 new_musuh = Musuh(UFO_ENEMY_WIDTH, UFO_ENEMY_HEIGHT, current_enemy_speed, is_new_enemy=False)
@@ -270,7 +309,6 @@ def run_game(screen, clock):
                 shooter_count += 1
 
             # --- Cek Tabrakan Player ---
-            # [FIX] Blok ini HARUS di dalam (if banner_state == "hidden")
             tabrakan_player_musuh = pygame.sprite.spritecollide(player, grup_musuh, True)
             tabrakan_player_peluru_musuh = pygame.sprite.spritecollide(player, grup_peluru_musuh, True) 
 
@@ -311,7 +349,7 @@ def run_game(screen, clock):
         stage_text = assets.font_ui.render(f"Stage: {current_stage}", True, s.WHITE)
         screen.blit(stage_text, (10, 40))
         
-        draw_lives(screen, 10, s.SCREEN_HEIGHT - 35, player.lives, player_mini_img)
+        draw_lives(screen, 30, s.SCREEN_HEIGHT - 55, player.lives, player_mini_img)
         
         # UI Bar Spesial
         ui_y_pos = 70 
@@ -331,7 +369,7 @@ def run_game(screen, clock):
         pygame.draw.rect(screen, s.POWERUP_BLUE, fill_rect) 
         pygame.draw.rect(screen, s.WHITE, outline_rect, 2) 
         
-        # UI (Timer Powerup di Kanan)
+        # --- UI (Timer Powerup di Kanan) ---
         ui_y_pos_kanan = 10
         
         if player.speed_powerup_collected:
@@ -351,11 +389,26 @@ def run_game(screen, clock):
             timer_text = assets.font_ui.render(f"LASER: {player.laser_timer // s.FPS + 1}s", True, s.POWERUP_BLUE)
             screen.blit(timer_text, (s.SCREEN_WIDTH - timer_text.get_width() - 10, ui_y_pos_kanan))
             ui_y_pos_kanan += 30
+        
+        # Tampilkan "SPEED UP!"
         if player.speed_indicator_timer > 0:
             speed_text_overlay = assets.font_indicator.render("SPEED UP!", True, s.POWERUP_GREEN)
             screen.blit(speed_text_overlay, (s.SCREEN_WIDTH // 2 - speed_text_overlay.get_width() // 2, s.SCREEN_HEIGHT // 2))
 
-        # [BLOK BARU] Render Banner (digambar paling akhir agar di atas UI)
+        # Render Indikator Volume
+        if volume_indicator_timer > 0:
+            volume_text_overlay = assets.font_indicator.render(volume_indicator_text, True, s.WHITE)
+            volume_rect = volume_text_overlay.get_rect(center=(s.SCREEN_WIDTH // 2, s.SCREEN_HEIGHT // 2 + 40)) 
+            screen.blit(volume_text_overlay, volume_rect)
+
+        # Tampilkan Instruksi Volume
+        instruction_text_str = "M: Mute | -/+ : Volume"
+        instruction_surf = assets.font_ui.render(instruction_text_str, True, s.WHITE)
+        instruction_surf.set_alpha(150) 
+        instruction_rect = instruction_surf.get_rect(bottomright=(s.SCREEN_WIDTH - 10, s.SCREEN_HEIGHT - 10))
+        screen.blit(instruction_surf, instruction_rect)
+
+        # Render Banner (digambar paling akhir agar di atas UI)
         if banner_state != "hidden":
             banner_surf = pygame.Surface((s.SCREEN_WIDTH, s.BANNER_HEIGHT), pygame.SRCALPHA)
             banner_surf.fill((0, 0, 0, 180)) 

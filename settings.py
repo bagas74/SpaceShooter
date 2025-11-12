@@ -7,7 +7,7 @@ GREEN_TOSCA = (0, 204, 153)
 GREEN = (0, 150, 0)
 FPS = 60  # Dibutuhkan untuk timer
 PLAYER_STARTING_LIVES = 3
-PLAYER_INVINCIBILITY_DURATION = 7 * FPS
+PLAYER_INVINCIBILITY_DURATION = 3 * FPS
 STAGE_CLEAR_DURATION = 6
 # Pengaturan Banner Notifikasi Stage
 BANNER_HEIGHT = 100  # Tinggi banner dalam piksel
@@ -52,16 +52,21 @@ POWERUP_YELLOW_DARK = (204, 204, 0)
 SCREEN_WIDTH = 800 
 SCREEN_HEIGHT = 600 
 
-# --- Muat gambar musuh baru --- (BARIS 92)
+# --- Muat gambar musuh baru --- (BARIS 92) 
 ENEMY_IMAGE_PATH = "enemy_ship.png"
-ENEMY_IMAGE_SIZE = (70, 70) 
+ENEMY_IMAGE_SIZE = (110, 110)
+ENEMY_SHOOTER_PATH = "enemy_shooter.png" # Ganti 'enemy_shooter.png' dengan nama file Anda
+ENEMY_SHOOTER_SIZE = (100, 90)
 
 # Muat Gambar Player (BARIS 107)
 PLAYER_IMAGE_PATH = "player_ship.png" 
-PLAYER_IMAGE_SIZE = (70, 75) # (Lebar, Tinggi)
+PLAYER_IMAGE_SIZE = (90, 90) # (Lebar, Tinggi)
 
-# ... di dalam run_game, sekitar baris 578 ...
+
+
 SPECIAL_METER_MAX = 25
 
-# ... di dalam run_game, sekitar baris 581 ...
 POWERUP_SPAWN_RATE = 10 * FPS
+
+MUSIC_ENABLED = True
+MUSIC_VOLUME = 0.5

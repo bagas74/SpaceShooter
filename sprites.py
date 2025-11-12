@@ -165,17 +165,29 @@ class Musuh(pygame.sprite.Sprite):
         super().__init__()
         self.is_new_enemy = is_new_enemy 
         
-        if self.is_new_enemy and assets.ENEMY_IMAGE:
-            self.image = assets.ENEMY_IMAGE.copy() 
-            self.rect = self.image.get_rect()
-        else: 
-            self.image = pygame.Surface((width, height), pygame.SRCALPHA)
-            self.rect = self.image.get_rect()
-            if self.is_new_enemy:
-                draw_alien_ship_enemy(self.image, self.image.get_rect())
+        # --- [MODIFIKASI LOGIKA GAMBAR] ---
+        if self.is_new_enemy:
+            # Ini adalah musuh SHOOTER (tipe 2)
+            if assets.ENEMY_SHOOTER_IMAGE: # Gunakan gambar musuh shooter
+                self.image = assets.ENEMY_SHOOTER_IMAGE.copy() 
             else:
+                # Fallback ke gambar default Shooter (jika gagal dimuat)
+                self.image = pygame.Surface((width, height), pygame.SRCALPHA)
+                draw_alien_ship_enemy(self.image, self.image.get_rect())
+        
+        else:
+            # Ini adalah musuh UFO (tipe 1 / biasa)
+            if assets.ENEMY_IMAGE: # Gunakan gambar UFO yang biasa
+                self.image = assets.ENEMY_IMAGE.copy()
+            else:
+                # Fallback ke gambar default UFO
+                self.image = pygame.Surface((width, height), pygame.SRCALPHA)
                 draw_enemy_ufo(self.image, self.image.get_rect())
-
+        
+        # Dapatkan rect SETELAH gambar ditentukan
+        self.rect = self.image.get_rect()
+        # --- [SELESAI MODIFIKASI] ---
+        
         self.rect.y = random.randrange(-100, -40)
         self.rect.x = random.randrange(s.SCREEN_WIDTH - self.rect.width) 
         
