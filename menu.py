@@ -10,3 +10,13 @@ SCREEN_HEIGHT = 600
 # Inisialisasi font (Pygame sudah di-init di main.py)
 title_font = pygame.font.SysFont(None, 80)
 button_font = pygame.font.SysFont(None, 50)
+
+# Buat tombol
+button_width = 200
+button_height = 70
+start_button_rect = pygame.Rect(
+ (SCREEN_WIDTH - button_width) // 2, 
+ (SCREEN_HEIGHT // 2) + 30, 
+ button_width, 
+ button_height
+)
