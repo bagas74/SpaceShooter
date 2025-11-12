@@ -86,6 +86,10 @@ def run_game(screen, clock):
     volume_indicator_timer = 0 
     volume_indicator_text = ""   
 
+    # --- [PAUSE 1/4] Variabel untuk melacak status pause ---
+    paused = False
+    # --- [SELESAI BLOK 1] ---
+
     # --- Logika musik untuk layar game ---
     if s.MUSIC_ENABLED:
         pygame.mixer.music.load(assets.MUSIC_GAME)
@@ -101,6 +105,11 @@ def run_game(screen, clock):
                 return "quit", 0 
             
             if event.type == pygame.KEYDOWN:
+                
+                # --- [PAUSE 2/4] Tambahkan cek untuk tombol 'P' ---
+                if event.key == pygame.K_p:
+                    paused = not paused # Balik status pause
+                # --- [SELESAI BLOK 2] ---
                 
                 # --- Logika Tombol Mute 'M'] ---
                 if event.key == pygame.K_m:
@@ -135,189 +144,195 @@ def run_game(screen, clock):
                         volume_indicator_text = "Music: Off" 
                         
                 # --- Logika Tembak ---
-                if banner_state == "hidden":
+                # (Hanya jika TIDAK dipause DAN banner tidak terlihat)
+                if not paused and banner_state == "hidden":
                     if event.key == pygame.K_SPACE:
                         if player.can_shoot(frame_count):
                             player.shoot(frame_count, grup_peluru_pemain, semua_sprite)
 
-        # --- UPDATE SKOR & FRAME ---
-        frame_count += 1
-        if frame_count % 12 == 0:
-            score += 1
-            stage_xp += 1 
-        
-        # --- Update Timer Indikator ---
-        if volume_indicator_timer > 0:
-            volume_indicator_timer -= 1
+        # --- [PAUSE 3/4] Bungkus SEMUA LOGIKA GAME di dalam 'if not paused' ---
+        # Game "membeku" jika 'paused' adalah True
+        if not paused:
+            # --- UPDATE SKOR & FRAME ---
+            frame_count += 1
+            if frame_count % 12 == 0:
+                score += 1
+                stage_xp += 1 
             
-        # --- INPUT GERAK ---
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_LEFT] and player.rect.left > 0:
-            player.rect.x -= player_speed
-        if keys[pygame.K_RIGHT] and player.rect.right < s.SCREEN_WIDTH: 
-            player.rect.x += player_speed
-        if keys[pygame.K_UP] and player.rect.top > PLAYER_TOP_BOUNDARY:
-            player.rect.y -= player_speed
-        if keys[pygame.K_DOWN] and player.rect.bottom < s.SCREEN_HEIGHT: 
-            player.rect.y += player_speed
-
-        # --- 2. Logika Game (Update) ---
-        new_enemy_bullets = []
-        
-        if banner_state == "hidden":
-            for sprite in semua_sprite:
-                sprite.update() 
+            # --- Update Timer Indikator ---
+            if volume_indicator_timer > 0:
+                volume_indicator_timer -= 1
                 
-                if isinstance(sprite, Musuh) and sprite.is_new_enemy:
-                    if random.randrange(0, 100) < 2: 
-                        peluru_baru = sprite.shoot() 
-                        new_enemy_bullets.extend(peluru_baru)
-        else:
-             player.update()
-        
-        if new_enemy_bullets:
-            semua_sprite.add(new_enemy_bullets)
-            grup_peluru_musuh.add(new_enemy_bullets)
-            
-        player.update_timers()
+            # --- INPUT GERAK ---
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_LEFT] and player.rect.left > 0:
+                player.rect.x -= player_speed
+            if keys[pygame.K_RIGHT] and player.rect.right < s.SCREEN_WIDTH: 
+                player.rect.x += player_speed
+            if keys[pygame.K_UP] and player.rect.top > PLAYER_TOP_BOUNDARY:
+                player.rect.y -= player_speed
+            if keys[pygame.K_DOWN] and player.rect.bottom < s.SCREEN_HEIGHT: 
+                player.rect.y += player_speed
 
-        # --- Logika Stage ---
-        new_stage = 1 + (stage_xp // 500) 
-        
-        if new_stage > current_stage and banner_state == "hidden":
-            banner_state = "moving_down"
-            banner_text_surf = assets.stage_clear_font.render(f"STAGE {new_stage}", True, s.WHITE)
-            current_stage = new_stage
-            print(f"Memicu Stage {current_stage}!") 
+            # --- 2. Logika Game (Update) ---
+            new_enemy_bullets = []
             
-            current_enemy_speed = base_enemy_speed + (current_stage * 0.15) 
-            max_ufo_enemies = min(2 + current_stage, 6) 
-            max_shooter_enemies = current_stage // 3
+            if banner_state == "hidden":
+                for sprite in semua_sprite:
+                    sprite.update() 
+                    
+                    if isinstance(sprite, Musuh) and sprite.is_new_enemy:
+                        if random.randrange(0, 100) < 2: 
+                            peluru_baru = sprite.shoot() 
+                            new_enemy_bullets.extend(peluru_baru)
+            else:
+                player.update()
             
-            for musuh in grup_musuh:
-                musuh.kill()
-            for peluru in grup_peluru_musuh:
-                peluru.kill()
-            for peluru in grup_peluru_pemain:
-                peluru.kill()
-            for powerup in grup_powerup:
-                powerup.kill()
-        
-        # --- Logika Animasi Banner ---
-        if banner_state == "moving_down":
-            banner_y_pos += s.BANNER_SPEED
-            if banner_y_pos >= 0: 
-                banner_y_pos = 0
-                banner_state = "visible"
-                banner_stay_timer = s.BANNER_STAY_TIME
-        
-        elif banner_state == "visible":
-            banner_stay_timer -= 1
-            if banner_stay_timer <= 0:
-                banner_state = "moving_up"
-        
-        elif banner_state == "moving_up":
-            banner_y_pos -= s.BANNER_SPEED
-            if banner_y_pos <= -s.BANNER_HEIGHT: 
-                banner_y_pos = -s.BANNER_HEIGHT
-                banner_state = "hidden"
-        
-        for musuh in grup_musuh.sprites():
-            if musuh.rect.top > s.SCREEN_HEIGHT: 
-                musuh.kill()
-        
-        # --- Spawn Powerup ---
-        if banner_state == "hidden":
-            powerup_spawn_timer += 1
-            if powerup_spawn_timer >= s.POWERUP_SPAWN_RATE: 
-                powerup_spawn_timer = 0 
-                tipe = random.choice(['T', 'P', 'S', '+0.5'])
-                new_powerup = Powerup(tipe)
-                grup_powerup.add(new_powerup)
-                semua_sprite.add(new_powerup)
-
-        # --- 3. Cek Tabrakan ---
-        if banner_state == "hidden":
-            tabrakan_peluru_musuh = pygame.sprite.groupcollide(grup_peluru_pemain, grup_musuh, True, True)
-            for list_musuh_terkena in tabrakan_peluru_musuh.values():
-                for musuh_yang_terkena in list_musuh_terkena:
-                    if musuh_yang_terkena.is_new_enemy:
-                        score += 50
-                        stage_xp += 50
-                    else:
-                        score += 10
-                        stage_xp += 10
-                    assets.suara_ledakan.play() 
-                    if not player.laser_active: special_meter_count += 1
-            
-            tabrakan_player_powerup = pygame.sprite.spritecollide(player, grup_powerup, True)
-            for powerup in tabrakan_player_powerup:
-                if powerup.type == 'T': player.activate_trishot()
-                elif powerup.type == 'P': player.activate_shield()
-                elif powerup.type == 'S':
-                    sw = Shockwave()
-                    semua_sprite.add(sw)
-                    grup_shockwave.add(sw)
-                    assets.suara_shockwave.play() 
-                elif powerup.type == '+0.5': player.activate_speedup()
-
-            tabrakan_shockwave_musuh = pygame.sprite.groupcollide(grup_shockwave, grup_musuh, False, True)
-            for list_musuh_terkena in tabrakan_shockwave_musuh.values():
-                for musuh_yang_terkena in list_musuh_terkena:
-                    if musuh_yang_terkena.is_new_enemy:
-                        score += 25
-                        stage_xp += 25
-                    else:
-                        score += 5
-                        stage_xp += 5
-                    assets.suara_ledakan.play()
-                    if not player.laser_active: special_meter_count += 1
-            
-            pygame.sprite.groupcollide(grup_shockwave, grup_peluru_musuh, False, True)
-            pygame.sprite.groupcollide(grup_laser_pemain, grup_peluru_musuh, False, True)
-            
-            tabrakan_laser_musuh = pygame.sprite.groupcollide(grup_laser_pemain, grup_musuh, False, True)
-            for list_musuh_terkena in tabrakan_laser_musuh.values():
-                for musuh_yang_terkena in list_musuh_terkena:
-                    if musuh_yang_terkena.is_new_enemy:
-                        score += 50
-                        stage_xp += 50
-                    else:
-                        score += 10
-                        stage_xp += 10
-                    assets.suara_ledakan.play()
-            
-            if special_meter_count >= s.SPECIAL_METER_MAX: 
-                player.activate_laser(semua_sprite, grup_laser_pemain)
-                special_meter_count = 0 
-
-            # --- Logika Respawn Musuh ---
-            ufo_count = sum(1 for m in grup_musuh if not m.is_new_enemy)
-            while ufo_count < max_ufo_enemies:
-                new_musuh = Musuh(UFO_ENEMY_WIDTH, UFO_ENEMY_HEIGHT, current_enemy_speed, is_new_enemy=False)
-                grup_musuh.add(new_musuh)
-                semua_sprite.add(new_musuh)
-                ufo_count += 1
+            if new_enemy_bullets:
+                semua_sprite.add(new_enemy_bullets)
+                grup_peluru_musuh.add(new_enemy_bullets)
                 
-            shooter_count = sum(1 for m in grup_musuh if m.is_new_enemy)
-            while shooter_count < max_shooter_enemies:
-                w = s.ENEMY_IMAGE_SIZE[0] if assets.ENEMY_IMAGE else SHOOTER_ENEMY_WIDTH
-                h = s.ENEMY_IMAGE_SIZE[1] if assets.ENEMY_IMAGE else SHOOTER_ENEMY_HEIGHT
-                new_special_enemy = Musuh(w, h, current_enemy_speed, is_new_enemy=True)
-                grup_musuh.add(new_special_enemy)
-                semua_sprite.add(new_special_enemy)
-                shooter_count += 1
+            player.update_timers()
 
-            # --- Cek Tabrakan Player ---
-            tabrakan_player_musuh = pygame.sprite.spritecollide(player, grup_musuh, True)
-            tabrakan_player_peluru_musuh = pygame.sprite.spritecollide(player, grup_peluru_musuh, True) 
+            # --- Logika Stage ---
+            new_stage = 1 + (stage_xp // 500) 
+            
+            if new_stage > current_stage and banner_state == "hidden":
+                banner_state = "moving_down"
+                banner_text_surf = assets.stage_clear_font.render(f"STAGE {new_stage}", True, s.WHITE)
+                current_stage = new_stage
+                print(f"Memicu Stage {current_stage}!") 
+                
+                current_enemy_speed = base_enemy_speed + (current_stage * 0.15) 
+                max_ufo_enemies = min(2 + current_stage, 6) 
+                max_shooter_enemies = current_stage // 3
+                
+                for musuh in grup_musuh:
+                    musuh.kill()
+                for peluru in grup_peluru_musuh:
+                    peluru.kill()
+                for peluru in grup_peluru_pemain:
+                    peluru.kill()
+                for powerup in grup_powerup:
+                    powerup.kill()
+            
+            # --- Logika Animasi Banner ---
+            if banner_state == "moving_down":
+                banner_y_pos += s.BANNER_SPEED
+                if banner_y_pos >= 0: 
+                    banner_y_pos = 0
+                    banner_state = "visible"
+                    banner_stay_timer = s.BANNER_STAY_TIME
+            
+            elif banner_state == "visible":
+                banner_stay_timer -= 1
+                if banner_stay_timer <= 0:
+                    banner_state = "moving_up"
+            
+            elif banner_state == "moving_up":
+                banner_y_pos -= s.BANNER_SPEED
+                if banner_y_pos <= -s.BANNER_HEIGHT: 
+                    banner_y_pos = -s.BANNER_HEIGHT
+                    banner_state = "hidden"
+            
+            for musuh in grup_musuh.sprites():
+                if musuh.rect.top > s.SCREEN_HEIGHT: 
+                    musuh.kill()
+            
+            # --- Spawn Powerup ---
+            if banner_state == "hidden":
+                powerup_spawn_timer += 1
+                if powerup_spawn_timer >= s.POWERUP_SPAWN_RATE: 
+                    powerup_spawn_timer = 0 
+                    tipe = random.choice(['T', 'P', 'S', '+0.5'])
+                    new_powerup = Powerup(tipe)
+                    grup_powerup.add(new_powerup)
+                    semua_sprite.add(new_powerup)
 
-            if tabrakan_player_musuh or tabrakan_player_peluru_musuh:
-                if not player.shield_active:
-                    player.get_hit() 
-                    assets.suara_player_hit.play() 
+            # --- 3. Cek Tabrakan ---
+            if banner_state == "hidden":
+                tabrakan_peluru_musuh = pygame.sprite.groupcollide(grup_peluru_pemain, grup_musuh, True, True)
+                for list_musuh_terkena in tabrakan_peluru_musuh.values():
+                    for musuh_yang_terkena in list_musuh_terkena:
+                        if musuh_yang_terkena.is_new_enemy:
+                            score += 50
+                            stage_xp += 50
+                        else:
+                            score += 10
+                            stage_xp += 10
+                        assets.suara_ledakan.play() 
+                        if not player.laser_active: special_meter_count += 1
+                
+                tabrakan_player_powerup = pygame.sprite.spritecollide(player, grup_powerup, True)
+                for powerup in tabrakan_player_powerup:
+                    if powerup.type == 'T': player.activate_trishot()
+                    elif powerup.type == 'P': player.activate_shield()
+                    elif powerup.type == 'S':
+                        sw = Shockwave()
+                        semua_sprite.add(sw)
+                        grup_shockwave.add(sw)
+                        assets.suara_shockwave.play() 
+                    elif powerup.type == '+0.5': player.activate_speedup()
+
+                tabrakan_shockwave_musuh = pygame.sprite.groupcollide(grup_shockwave, grup_musuh, False, True)
+                for list_musuh_terkena in tabrakan_shockwave_musuh.values():
+                    for musuh_yang_terkena in list_musuh_terkena:
+                        if musuh_yang_terkena.is_new_enemy:
+                            score += 25
+                            stage_xp += 25
+                        else:
+                            score += 5
+                            stage_xp += 5
+                        assets.suara_ledakan.play()
+                        if not player.laser_active: special_meter_count += 1
+                
+                pygame.sprite.groupcollide(grup_shockwave, grup_peluru_musuh, False, True)
+                pygame.sprite.groupcollide(grup_laser_pemain, grup_peluru_musuh, False, True)
+                
+                tabrakan_laser_musuh = pygame.sprite.groupcollide(grup_laser_pemain, grup_musuh, False, True)
+                for list_musuh_terkena in tabrakan_laser_musuh.values():
+                    for musuh_yang_terkena in list_musuh_terkena:
+                        if musuh_yang_terkena.is_new_enemy:
+                            score += 50
+                            stage_xp += 50
+                        else:
+                            score += 10
+                            stage_xp += 10
+                        assets.suara_ledakan.play()
+                
+                if special_meter_count >= s.SPECIAL_METER_MAX: 
+                    player.activate_laser(semua_sprite, grup_laser_pemain)
+                    special_meter_count = 0 
+
+                # --- Logika Respawn Musuh ---
+                ufo_count = sum(1 for m in grup_musuh if not m.is_new_enemy)
+                while ufo_count < max_ufo_enemies:
+                    new_musuh = Musuh(UFO_ENEMY_WIDTH, UFO_ENEMY_HEIGHT, current_enemy_speed, is_new_enemy=False)
+                    grup_musuh.add(new_musuh)
+                    semua_sprite.add(new_musuh)
+                    ufo_count += 1
+                    
+                shooter_count = sum(1 for m in grup_musuh if m.is_new_enemy)
+                while shooter_count < max_shooter_enemies:
+                    w = s.ENEMY_IMAGE_SIZE[0] if assets.ENEMY_IMAGE else SHOOTER_ENEMY_WIDTH
+                    h = s.ENEMY_IMAGE_SIZE[1] if assets.ENEMY_IMAGE else SHOOTER_ENEMY_HEIGHT
+                    new_special_enemy = Musuh(w, h, current_enemy_speed, is_new_enemy=True)
+                    grup_musuh.add(new_special_enemy)
+                    semua_sprite.add(new_special_enemy)
+                    shooter_count += 1
+
+                # --- Cek Tabrakan Player ---
+                tabrakan_player_musuh = pygame.sprite.spritecollide(player, grup_musuh, True)
+                tabrakan_player_peluru_musuh = pygame.sprite.spritecollide(player, grup_peluru_musuh, True) 
+
+                if tabrakan_player_musuh or tabrakan_player_peluru_musuh:
+                    if not player.shield_active:
+                        player.get_hit() 
+                        assets.suara_player_hit.play() 
+        # --- [AKHIR DARI BLOK 'if not paused:'] ---
+
         
-        # --- Cek Game Over (Di luar 'if hidden') ---
+        # --- Cek Game Over (Di luar 'if hidden' DAN 'if not paused') ---
         if player.lives <= 0:
             if player.laser_active:
                 assets.suara_laser.stop() 
@@ -325,7 +340,8 @@ def run_game(screen, clock):
             return "game_over", score 
         
         # --- 4. Render Game ---
-        screen.fill(s.BLACK) 
+        # (Render game tetap berjalan agar layar "beku" saat pause)
+        screen.blit(assets.BACKGROUND_IMAGE, (0, 0)) # <- Ganti screen.fill(s.BLACK)
         
         player_visible = True
         if player.is_invincible and player.invincible_timer % 10 < 5:
@@ -349,6 +365,7 @@ def run_game(screen, clock):
         stage_text = assets.font_ui.render(f"Stage: {current_stage}", True, s.WHITE)
         screen.blit(stage_text, (10, 40))
         
+        # Ini menggunakan posisi X=30, Y=-55, dan spasi 50 dari file Anda
         draw_lives(screen, 30, s.SCREEN_HEIGHT - 55, player.lives, player_mini_img)
         
         # UI Bar Spesial
@@ -407,6 +424,25 @@ def run_game(screen, clock):
         instruction_surf.set_alpha(150) 
         instruction_rect = instruction_surf.get_rect(bottomright=(s.SCREEN_WIDTH - 10, s.SCREEN_HEIGHT - 10))
         screen.blit(instruction_surf, instruction_rect)
+        
+        # --- [PAUSE 4/4] Render layar Pause ---
+        # Ini digambar paling akhir (sebelum banner) agar di atas segalanya
+        if paused:
+            # 1. Buat overlay gelap semi-transparan
+            overlay = pygame.Surface((s.SCREEN_WIDTH, s.SCREEN_HEIGHT), pygame.SRCALPHA)
+            overlay.fill((0, 0, 0, 180)) # Hitam dengan transparansi 180
+            screen.blit(overlay, (0, 0))
+            
+            # 2. Gambar teks "PAUSE" (menggunakan font besar dari assets)
+            pause_text = assets.title_font.render("PAUSE", True, s.WHITE)
+            pause_rect = pause_text.get_rect(center=(s.SCREEN_WIDTH // 2, s.SCREEN_HEIGHT // 2 - 50))
+            screen.blit(pause_text, pause_rect)
+            
+            # 3. Gambar instruksi (menggunakan font UI dari assets)
+            resume_text = assets.font_ui.render("Tekan 'P' untuk melanjutkan", True, s.WHITE)
+            resume_rect = resume_text.get_rect(center=(s.SCREEN_WIDTH // 2, pause_rect.bottom + 20))
+            screen.blit(resume_text, resume_rect)
+        # --- [SELESAI BLOK 4] ---
 
         # Render Banner (digambar paling akhir agar di atas UI)
         if banner_state != "hidden":

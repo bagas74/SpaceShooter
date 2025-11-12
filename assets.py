@@ -126,3 +126,22 @@ if os.path.exists(enemy_shooter_path):
         ENEMY_SHOOTER_IMAGE = None
 else:
     print(f"Peringatan: Gambar player '{player_image_path}' tidak ditemukan. Menggunakan bentuk default.")
+    
+BACKGROUND_IMAGE = None
+# Gunakan variabel IMAGE_FOLDER dan path dari settings.py
+bg_path = os.path.join(IMAGE_FOLDER, s.BACKGROUND_IMAGE_PATH) 
+
+if not os.path.exists(bg_path):
+    print(f"Peringatan: Background '{bg_path}' tidak ditemukan. Menggunakan warna hitam.")
+    BACKGROUND_IMAGE = pygame.Surface((s.SCREEN_WIDTH, s.SCREEN_HEIGHT))
+    BACKGROUND_IMAGE.fill(s.BLACK) # Fallback ke hitam
+else:
+    try:
+        BACKGROUND_IMAGE = pygame.image.load(bg_path).convert()
+        # Ubah ukuran gambar agar pas dengan layar
+        BACKGROUND_IMAGE = pygame.transform.scale(BACKGROUND_IMAGE, (s.SCREEN_WIDTH, s.SCREEN_HEIGHT))
+        print(f"Gambar background '{bg_path}' berhasil dimuat.")
+    except pygame.error as e:
+        print(f"Error memuat gambar background '{bg_path}': {e}")
+        BACKGROUND_IMAGE = pygame.Surface((s.SCREEN_WIDTH, s.SCREEN_HEIGHT))
+        BACKGROUND_IMAGE.fill(s.BLACK)

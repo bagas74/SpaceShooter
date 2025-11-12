@@ -62,6 +62,7 @@ ENEMY_SHOOTER_SIZE = (100, 90)
 PLAYER_IMAGE_PATH = "player_ship.png" 
 PLAYER_IMAGE_SIZE = (90, 90) # (Lebar, Tinggi)
 
+BACKGROUND_IMAGE_PATH = "background.jpg"
 
 
 SPECIAL_METER_MAX = 25

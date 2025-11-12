@@ -84,7 +84,11 @@ def run_menu(screen, clock):
                     return "playing"
 
         # --- 2. Render Menu ---
-        screen.fill(s.BLACK) 
+        
+        # [PERUBAHAN DI SINI]
+        # screen.fill(s.BLACK) # Hapus baris ini
+        screen.blit(assets.BACKGROUND_IMAGE, (0, 0)) # Tambahkan baris ini
+        # [SELESAI PERUBAHAN]
         
         # Gambar Judul
         title_text = assets.menu_title_font.render("Space Man", True, s.WHITE) 

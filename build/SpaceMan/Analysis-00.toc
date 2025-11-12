@@ -17,7 +17,11 @@
  {},
  0,
  [],
- [('assets\\images\\enemy_ship.png',
+ [('assets\\images\\background.jpg',
+   'D:\\KULIAH\\Semester '
+   '5\\Python\\Code_python\\SpaceShooter\\assets\\images\\background.jpg',
+   'DATA'),
+  ('assets\\images\\enemy_ship.png',
    'D:\\KULIAH\\Semester '
    '5\\Python\\Code_python\\SpaceShooter\\assets\\images\\enemy_ship.png',
    'DATA'),
@@ -1907,13 +1911,13 @@
    'C:\\Users\\acer '
    'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\plistlib.py',
    'PYMODULE'),
-  ('_py_abc',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\_py_abc.py',
-   'PYMODULE'),
   ('tracemalloc',
    'C:\\Users\\acer '
    'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\tracemalloc.py',
+   'PYMODULE'),
+  ('_py_abc',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\_py_abc.py',
    'PYMODULE'),
   ('stringprep',
    'C:\\Users\\acer '
@@ -1997,53 +2001,9 @@
    'C:\\Users\\acer '
    'series\\AppData\\Local\\Programs\\Python\\Python313\\python313.dll',
    'BINARY'),
-  ('libjpeg-9.dll',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\libjpeg-9.dll',
-   'BINARY'),
-  ('SDL2_ttf.dll',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\SDL2_ttf.dll',
-   'BINARY'),
-  ('zlib1.dll',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\zlib1.dll',
-   'BINARY'),
-  ('libopus-0.dll',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\libopus-0.dll',
-   'BINARY'),
   ('libpng16-16.dll',
    'C:\\Users\\acer '
    'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\libpng16-16.dll',
-   'BINARY'),
-  ('libtiff-5.dll',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\libtiff-5.dll',
-   'BINARY'),
-  ('libwebp-7.dll',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\libwebp-7.dll',
-   'BINARY'),
-  ('libmodplug-1.dll',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\libmodplug-1.dll',
-   'BINARY'),
-  ('SDL2_image.dll',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\SDL2_image.dll',
-   'BINARY'),
-  ('libopusfile-0.dll',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\libopusfile-0.dll',
-   'BINARY'),
-  ('portmidi.dll',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\portmidi.dll',
-   'BINARY'),
-  ('SDL2.dll',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\SDL2.dll',
    'BINARY'),
   ('freetype.dll',
    'C:\\Users\\acer '
@@ -2053,9 +2013,53 @@
    'C:\\Users\\acer '
    'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\SDL2_mixer.dll',
    'BINARY'),
+  ('libopusfile-0.dll',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\libopusfile-0.dll',
+   'BINARY'),
+  ('portmidi.dll',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\portmidi.dll',
+   'BINARY'),
+  ('libopus-0.dll',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\libopus-0.dll',
+   'BINARY'),
+  ('SDL2_image.dll',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\SDL2_image.dll',
+   'BINARY'),
+  ('SDL2.dll',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\SDL2.dll',
+   'BINARY'),
   ('libogg-0.dll',
    'C:\\Users\\acer '
    'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\libogg-0.dll',
+   'BINARY'),
+  ('libjpeg-9.dll',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\libjpeg-9.dll',
+   'BINARY'),
+  ('SDL2_ttf.dll',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\SDL2_ttf.dll',
+   'BINARY'),
+  ('libmodplug-1.dll',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\libmodplug-1.dll',
+   'BINARY'),
+  ('libtiff-5.dll',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\libtiff-5.dll',
+   'BINARY'),
+  ('libwebp-7.dll',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\libwebp-7.dll',
+   'BINARY'),
+  ('zlib1.dll',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\zlib1.dll',
    'BINARY'),
   ('_decimal.pyd',
    'C:\\Users\\acer '
@@ -2229,17 +2233,13 @@
    'C:\\Users\\acer '
    'series\\AppData\\Local\\Programs\\Python\\Python313\\VCRUNTIME140.dll',
    'BINARY'),
-  ('pygame\\SDL2.dll',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\SDL2.dll',
-   'BINARY'),
   ('pygame\\zlib1.dll',
    'C:\\Users\\acer '
    'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\zlib1.dll',
    'BINARY'),
-  ('pygame\\libjpeg-9.dll',
+  ('pygame\\SDL2.dll',
    'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\libjpeg-9.dll',
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\SDL2.dll',
    'BINARY'),
   ('pygame\\libopus-0.dll',
    'C:\\Users\\acer '
@@ -2248,6 +2248,10 @@
   ('pygame\\libogg-0.dll',
    'C:\\Users\\acer '
    'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\libogg-0.dll',
+   'BINARY'),
+  ('pygame\\libjpeg-9.dll',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\libjpeg-9.dll',
    'BINARY'),
   ('libcrypto-3.dll',
    'C:\\Users\\acer '
@@ -2287,7 +2291,11 @@
    'BINARY')],
  [],
  [],
- [('assets\\images\\enemy_ship.png',
+ [('assets\\images\\background.jpg',
+   'D:\\KULIAH\\Semester '
+   '5\\Python\\Code_python\\SpaceShooter\\assets\\images\\background.jpg',
+   'DATA'),
+  ('assets\\images\\enemy_ship.png',
    'D:\\KULIAH\\Semester '
    '5\\Python\\Code_python\\SpaceShooter\\assets\\images\\enemy_ship.png',
    'DATA'),
@@ -2343,41 +2351,41 @@
    'D:\\KULIAH\\Semester '
    '5\\Python\\Code_python\\SpaceShooter\\assets\\sound-effect\\shockwave.mp3',
    'DATA'),
-  ('pygame\\pygame_icon.bmp',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\pygame_icon.bmp',
-   'DATA'),
   ('pygame\\freesansbold.ttf',
    'C:\\Users\\acer '
    'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\freesansbold.ttf',
    'DATA'),
-  ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\RECORD',
+  ('pygame\\pygame_icon.bmp',
    'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\RECORD',
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\pygame\\pygame_icon.bmp',
    'DATA'),
-  ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\INSTALLER',
+  ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\top_level.txt',
    'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\INSTALLER',
-   'DATA'),
-  ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\LICENSE',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\LICENSE',
-   'DATA'),
-  ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\WHEEL',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\WHEEL',
-   'DATA'),
-  ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\REQUESTED',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\REQUESTED',
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\top_level.txt',
    'DATA'),
   ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\METADATA',
    'C:\\Users\\acer '
    'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\METADATA',
    'DATA'),
-  ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\top_level.txt',
+  ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\REQUESTED',
    'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\top_level.txt',
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\REQUESTED',
+   'DATA'),
+  ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\INSTALLER',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\INSTALLER',
+   'DATA'),
+  ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\RECORD',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\RECORD',
+   'DATA'),
+  ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\WHEEL',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\WHEEL',
+   'DATA'),
+  ('setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\LICENSE',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\setuptools\\_vendor\\importlib_metadata-8.0.0.dist-info\\LICENSE',
    'DATA'),
   ('setuptools\\_vendor\\jaraco\\text\\Lorem ipsum.txt',
    'C:\\Users\\acer '
@@ -2388,19 +2396,7 @@
    'D:\\KULIAH\\Semester '
    '5\\Python\\Code_python\\SpaceShooter\\build\\SpaceMan\\base_library.zip',
    'DATA')],
- [('weakref',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\weakref.py',
-   'PYMODULE'),
-  ('linecache',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\linecache.py',
-   'PYMODULE'),
-  ('types',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\types.py',
-   'PYMODULE'),
-  ('re._parser',
+ [('re._parser',
    'C:\\Users\\acer '
    'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\re\\_parser.py',
    'PYMODULE'),
@@ -2420,69 +2416,101 @@
    'C:\\Users\\acer '
    'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\re\\__init__.py',
    'PYMODULE'),
-  ('keyword',
+  ('reprlib',
    'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\keyword.py',
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\reprlib.py',
    'PYMODULE'),
   ('collections',
    'C:\\Users\\acer '
    'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\collections\\__init__.py',
    'PYMODULE'),
-  ('_collections_abc',
+  ('warnings',
    'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\_collections_abc.py',
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\warnings.py',
    'PYMODULE'),
-  ('traceback',
+  ('locale',
    'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\traceback.py',
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\locale.py',
    'PYMODULE'),
   ('abc',
    'C:\\Users\\acer '
    'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\abc.py',
    'PYMODULE'),
-  ('functools',
+  ('sre_constants',
    'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\functools.py',
-   'PYMODULE'),
-  ('_weakrefset',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\_weakrefset.py',
-   'PYMODULE'),
-  ('enum',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\enum.py',
-   'PYMODULE'),
-  ('sre_parse',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\sre_parse.py',
-   'PYMODULE'),
-  ('genericpath',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\genericpath.py',
-   'PYMODULE'),
-  ('warnings',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\warnings.py',
-   'PYMODULE'),
-  ('copyreg',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\copyreg.py',
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\sre_constants.py',
    'PYMODULE'),
   ('sre_compile',
    'C:\\Users\\acer '
    'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\sre_compile.py',
    'PYMODULE'),
+  ('keyword',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\keyword.py',
+   'PYMODULE'),
+  ('copyreg',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\copyreg.py',
+   'PYMODULE'),
+  ('stat',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\stat.py',
+   'PYMODULE'),
+  ('linecache',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\linecache.py',
+   'PYMODULE'),
+  ('functools',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\functools.py',
+   'PYMODULE'),
+  ('os',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\os.py',
+   'PYMODULE'),
+  ('operator',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\operator.py',
+   'PYMODULE'),
+  ('io',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\io.py',
+   'PYMODULE'),
+  ('codecs',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\codecs.py',
+   'PYMODULE'),
   ('posixpath',
    'C:\\Users\\acer '
    'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\posixpath.py',
    'PYMODULE'),
-  ('sre_constants',
+  ('ntpath',
    'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\sre_constants.py',
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\ntpath.py',
    'PYMODULE'),
-  ('locale',
+  ('enum',
    'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\locale.py',
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\enum.py',
+   'PYMODULE'),
+  ('genericpath',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\genericpath.py',
+   'PYMODULE'),
+  ('traceback',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\traceback.py',
+   'PYMODULE'),
+  ('sre_parse',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\sre_parse.py',
+   'PYMODULE'),
+  ('_collections_abc',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\_collections_abc.py',
+   'PYMODULE'),
+  ('_weakrefset',
+   'C:\\Users\\acer '
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\_weakrefset.py',
    'PYMODULE'),
   ('encodings.zlib_codec',
    'C:\\Users\\acer '
@@ -2972,35 +3000,15 @@
    'C:\\Users\\acer '
    'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\encodings\\__init__.py',
    'PYMODULE'),
-  ('os',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\os.py',
-   'PYMODULE'),
-  ('io',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\io.py',
-   'PYMODULE'),
   ('heapq',
    'C:\\Users\\acer '
    'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\heapq.py',
    'PYMODULE'),
-  ('ntpath',
+  ('weakref',
    'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\ntpath.py',
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\weakref.py',
    'PYMODULE'),
-  ('codecs',
+  ('types',
    'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\codecs.py',
-   'PYMODULE'),
-  ('operator',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\operator.py',
-   'PYMODULE'),
-  ('reprlib',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\reprlib.py',
-   'PYMODULE'),
-  ('stat',
-   'C:\\Users\\acer '
-   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\stat.py',
+   'series\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\types.py',
    'PYMODULE')])

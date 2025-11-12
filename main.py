@@ -9,7 +9,14 @@ pygame.mixer.init()
 # --- [PERBAIKAN] Pengaturan Layar DIPINDAHKAN KE ATAS ---
 # Kita HARUS membuat layar/screen SEBELUM mengimpor file (seperti assets)
 # yang mencoba memuat gambar.
-screen = pygame.display.set_mode((s.SCREEN_WIDTH, s.SCREEN_HEIGHT))
+
+# [MODIFIKASI] Tambahkan flag RESIZABLE (bisa diubah ukuran) dan SCALED (otomatis stretch)
+screen = pygame.display.set_mode(
+    (s.SCREEN_WIDTH, s.SCREEN_HEIGHT),
+    pygame.RESIZABLE | pygame.SCALED
+)
+# [SELESAI MODIFIKASI]
+
 pygame.display.set_caption("Space Man: StarWars")
 clock = pygame.time.Clock()
 
