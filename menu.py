@@ -1,0 +1,8 @@
+import pygame
+# --- Variabel Lokal untuk Menu ---
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+GREEN_TOSCA = (0, 204, 153)
+# Kita perlu tahu ukuran layar untuk menempatkan tombol
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
